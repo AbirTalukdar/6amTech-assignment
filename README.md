@@ -113,8 +113,3 @@ same as create only change request post to put
 also need some headers as like as product create 
 ```
 
-### Get all reviews in particular product
-```
-(GET) http://localhost:8000/api/products/1/reviews
-```
-
