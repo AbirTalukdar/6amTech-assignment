@@ -35,17 +35,11 @@ create folder under public/storage/images
  php artisan serve
 ```
 
-And repeat
-
-```
-until finished
-```
-
-End with an example of getting some data out of the system or using it for a little demo
+For a little demo
 
 ## Running the tests
 
-I am using Postman u can use anyone like insomnia
+Using Postman for creating user
 
 ### create user token for create update and delete operation
 
@@ -67,49 +61,3 @@ Body(put your details [Nb: password allows be 'secret' if you are using seed com
 	"password" : "secret"
 }
 ```
-
-## Break down into end to end tests
-
-Flow below instraction for test your API 
-
-### Get all products
-```
-(GET) http://localhost:8000/api/products
-```
-
-### Get single products
-```
-(GET) http://localhost:8000/api/products/1
-```
-
-### Create products
-```
-(POST) http://localhost:8000/api/products
-
-Headers
-Accept : application/json
-Content-Type : application/json
-Authorization : "put your user secret"
-
-Body(put your details)
-
-{
-	"name" : "Iphone X",
-	"description" : "Super Retina in two sizes — including the largest display ever on an iPhone. Even faster Face ID. The smartest, most powerful chip in a smartphone. And a breakthrough dual-camera system. iPhone XS is everything you love about iPhone. Taken to the extreme.",
-	"price" : 10000,
-	"stock" : 10,
-	"discount" : 15
-}
-```
-
-### Update product 
-```
-same as create only change request post to put
-```
-
-### Delete product
-```
-(DELETE) http://localhost:8000/api/products/2
-also need some headers as like as product create 
-```
-
