@@ -15,9 +15,9 @@ use App\Http\Resources\Product\ProductCollection;
 class ProductController extends Controller
 {
 
-    public function __construct(){
-        $this->middleware('auth:api')->except('index','show');
-    }
+    // public function __construct(){
+    //     $this->middleware('auth:api')->except('index','show','create',);
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -35,7 +35,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        return view('productEntry');
     }
 
     /**
@@ -46,6 +46,8 @@ class ProductController extends Controller
      */
     public function store(ProductRequest $request)
     {
+        // return 'tgffffyufuyff';
+        // info($request->all());
         $product = new Product;
         $product->name = $request->name;
         $product->detail = $request->description;
@@ -53,10 +55,13 @@ class ProductController extends Controller
         $product->discount = $request->discount;
         $product->stock = $request->stock;
         $product->user_id = Auth::id();
+        //$product->user_id = 1;
         $product->save();
         return response([
             'data' => new ProductResource($product)
         ],201);
+        // return redirect()->route('product.list')
+        //  ->withSuccess(__('Product Created Successfully'));
     }
 
     /**
@@ -67,7 +72,8 @@ class ProductController extends Controller
      */
     public function show()
     {
-        $data = Product::all();
+        
+        $data = Product::paginate(10);
         return view('productList',['products'=>$data]);
     }
 
@@ -77,9 +83,11 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Product $product, $id)
     {
-        
+
+        $product = Product::find($id);
+        return view('productEdit',with(['product'=>$product]));
     }
 
     /**
@@ -91,13 +99,23 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $this->ProductUserCheck($product);
-        $request['detail'] = $request->description;
-        unset($request['description']);
-        $product->update($request->all());
-        return response([
-            'data' => new ProductResource($product)
-        ],Response::HTTP_OK);
+
+        //return $request->all();
+        $product = Product::find($request->id);
+        if($product){
+            $product->name = $request->name;
+            $product->detail = $request->description;
+            $product->price = $request->price;
+            $product->discount = $request->discount;
+            $product->stock = $request->stock;
+            $product->user_id = Auth::id();
+            //$product->user_id = 1;
+            $product->save();
+            return response([
+                'data' => new ProductResource($product)
+            ],201);
+        }
+        
     }
 
     /**
@@ -106,9 +124,9 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $product)
+    public function destroy(Request $request)
     {
-        $this->ProductUserCheck($product);
+        $product = Product::find($request->id);
         $product->delete();
         return response(null,204);
     }

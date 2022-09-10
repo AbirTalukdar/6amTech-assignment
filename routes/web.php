@@ -13,10 +13,22 @@ use App\Http\Controllers\ProductController;
 */
 
 Route::get('/', function () {
-    return redirect('api/products');
+    return redirect('/login');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/product-list',[ProductController::class,'show']);
+// Route::get('/home', 'HomeController@index')->name('home');
+// Route::get('/product-list',[ProductController::class,'show']);
+// Route::post('/product-store',[ProductController::class,'store'])->name('product.store');
+// Route::get('/product-entry',[ProductController::class,'create']);
+
+Route::group(['middleware' =>'auth'], function () {
+    Route::get('/home', 'HomeController@index')->name('home');
+    Route::get('/product-list',[ProductController::class,'show'])->name('product.list');
+    Route::post('/product-store',[ProductController::class,'store'])->name('product.store');
+    Route::get('/product-entry',[ProductController::class,'create']);
+    Route::get('/product-edit/{id}',[ProductController::class,'edit']);
+    Route::post('/product-update',[ProductController::class,'update'])->name('product.update');
+    Route::post('/product-delete',[ProductController::class,'destroy'])->name('product.delete');
+});

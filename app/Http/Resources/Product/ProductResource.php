@@ -21,10 +21,7 @@ class ProductResource extends JsonResource
             'price' => $this->price,            
             'stock' => $this->stock > 0 ? ($this->stock) : "Out of stock",            
             'discount' => $this->discount,
-            'discountPrice' => round(((1-($this->discount/100))*$this->price),2),
-            // 'href' => [
-            //     'reviews' => route('reviews.index', $this->id)
-            // ]           
+            'discountPrice' => round(((1-($this->discount/100))*$this->price),2),      
 
         ];
     }

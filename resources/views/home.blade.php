@@ -15,6 +15,9 @@
                     @endif
 
                     You are logged in!
+                    <div class="text-center px-xl-3">
+                    <button class="btn btn-success btn-block" type="button" data-toggle="modal" data-target="#user-form-modal"><a href="/product-list">Product List</a></button>
+                    </div>
                 </div>
             </div>
         </div>
